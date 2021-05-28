@@ -1,5 +1,16 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>MainScreen.ui.qml</file>
+        <file>SplashScreen.ui.qml</file>
+        <file>DebugScreen.ui.qml</file>
+        <file>SettingsScreen.ui.qml</file>
+        <file>Armband_Pi__2_logo.png</file>
+        <file>playicon.png</file>
+        <file>pause.png</file>
+        <file>gear.png</file>
+        <file>run.gif</file>
+        <file>Lato-Thin.ttf</file>
+        <file>Lato-Bold.ttf</file>
     </qresource>
 </RCC>

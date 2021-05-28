@@ -3,102 +3,336 @@ import QtQuick.Window 2.4
 import QtQuick.Controls 2.2
 import plugin.backend 1.0
 import QtCharts 2.0
+// import QtQuick.Layouts 1.0
 
 Window {
     id:mainWindow
-    width: 500
-    height: 400
+    width: 800
+    height: 480
     title: qsTr("HELLO")
     visible: true
+    visibility: "FullScreen"
+    color: "#74C8C1"
+
+    Item {
+        id: globalSettings
+        property color blue: "#74c8c1"
+        property color purple: "#695096"
+        property color lightGreen: "#A4D9A7"
+        property color garkGreen: "#579D6B"
+        property color yellow: "#F4CC59"
+        property color brown: "#83544A"
+        property color gray: "#F6EAEA"
+
+        property int userHeight: 180
+        property int userWeight: 70
+        property int userAge: 70
+        property int userSex: 0
+    }
+
+    Rectangle {
+        id: rectangle
+        width: parent.width
+        height: parent.height
+        color: globalSettings.blue
+        border.color: "red"
+        border.width: 5
+    }
 
     Backend{
         id: backend
         property int index: 0
-        property int windowSize: 50
+        // asynchronous: true
+        // stepSensitivity: sensitivitySlider.value
     }
-    Column{
-    Row {
-        width: parent.width
-        height: 50
-        Label {
-            id:label
-            width: parent.width/3
-            // anchors.left: parent.left
-            text: "X:"+backend.accelX.toString()
-        }
 
-        Label {
-            id:label1
-            width: parent.width/3
-            // anchors.horizontalCenter: parent.horizontalCenter
-            text: "Y:"+backend.accelY.toString()
-        }
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        initialItem: "SplashScreen.ui.qml"
+        // initialItem: "SettingsScreen.ui.qml"
+        // initialItem: "MainScreen.ui.qml"
+        // initialItem: "DebugScreen.ui.qml"
+    }
 
-        Label {
-            id:label2
-            width: parent.width/3
-            // anchors.right: parent.right
-            text: "Z:"+backend.accelZ.toString()
+    Timer {
+        interval: 2000
+        running: true
+        onTriggered:{
+            backend.init()
+            stackView.push("MainScreen.ui.qml")
         }
     }
 
-    ChartView {
-        id:chart
-        width: 500
-        height: 350
-        title: "X axis"
-        // animationOptions: ChartView.SeriesAnimations
+/*
+    Component {
+        id: detailsScreen
+        Row{
+            // anchors.fill: parent
+            width: mainWindow.width
+            height: mainWindow.height
+            Column {
+                width: parent.width/3
+                height: parent.height
 
-        ValueAxis {
-            id: myAxisX
-            min: backend.index-backend.windowSize
-            max: backend.windowSize>backend.index? 10:backend.index+1
-        }
-        ValueAxis {
-            id: myAxisY
-            min: -2
-            max: 2
-        }
-
-        LineSeries {
-            id: lineDataX
-            axisX: myAxisX
-            axisY: myAxisY
-            width: 3
-            color:"#FF0000"
-        }
-        LineSeries {
-            id: lineDataY
-            axisX: myAxisX
-            axisY: myAxisY
-            width: 3
-            color:"#00FF00"
-        }
-        LineSeries {
-            id: lineDataZ
-            axisX: myAxisX
-            axisY: myAxisY
-            width: 3
-            color:"#0000FF"
-        }
-
-        Timer {
-            interval: 10
-            running: true
-            repeat: true
-            onTriggered: {
-                backend.getImuData()
-                backend.index = backend.index + 1
-                if(lineDataX.count > backend.windowSize){
-                    lineDataX.remove(0)
-                    lineDataY.remove(0)
-                    lineDataZ.remove(0)
+                Label {
+                    text: "Graph Size: "+graphSize.value
                 }
-                lineDataX.append(backend.index,backend.accelX)
-                lineDataY.append(backend.index,backend.accelY)
-                lineDataZ.append(backend.index,backend.accelZ)
+                Slider {
+                    id: graphSize
+                    from: 10
+                    to: 200
+                    value: 50
+                    stepSize: 10
+                    width: parent.width
+                }
+
+                Row{
+                    CheckBox{
+                        id: checkX
+                        checked: true
+                    }
+                    Label {
+                        text: "X:"+backend.accelX.toFixed(4).toString()
+                    }
+                }
+
+                Row{
+                    CheckBox{
+                        id: checkY
+                        checked: true
+                    }
+                    Label {
+                        text: "Y:"+backend.accelY.toFixed(4).toString()
+                    }
+                }
+
+                Row{
+                    CheckBox{
+                        id: checkZ
+                        checked: true
+                    }
+                    Label {
+                        text: "Z:"+backend.accelZ.toFixed(4).toString()
+                    }
+                }
+
+                Row{
+                    CheckBox{
+                        id: checkM
+                        checked: true
+                    }
+                    Label {
+                        text: "M:"+backend.accelM.toFixed(4).toString()
+                    }
+                }
+
+                Row{
+                    CheckBox{
+                        id: checkL
+                        checked: true
+                    }
+                    Label {
+                        text: "L:"+backend.accelL.toFixed(4).toString()
+                    }
+                }
+
+                Row{
+                    CheckBox{
+                        id: checkH
+                        checked: true
+                    }
+                    Label {
+                        text: "H:"+backend.accelH.toFixed(4).toString()
+                    }
+                }
+
+                Row{
+                    CheckBox{
+                        id: checkC
+                        checked: true
+                    }
+                    Label {
+                        text: "C:"+backend.accelC.toFixed(4).toString()
+                    }
+                }
+                
+
+                Label {
+                    text: "Sample Rate:"+backend.sampleRate.toString()
+                }
+
+                Label {
+                    text: "Step Sensitivity: " + backend.stepSensitivity.toFixed(4).toString()
+                }
+
+                Slider {
+                    id: sensitivitySlider
+                    from: 0.00
+                    to: 0.40
+                    stepSize: 0.01
+                    value: 0.10
+                    onValueChanged:{
+                        backend.stepSensitivity = value
+                    }
+                }
+
+                Label {
+                    text: "Steps: " + backend.stepCount.toString()
+                }
+
+                // Label {
+                //     text: "Z:"+backend.accelZ.toFixed(4).toString()
+                // }
+                
+                // Label {
+                //     text: "M:"+backend.accelM.toFixed(4).toString()
+                // }
+
+                // Label {
+                //     text: "L:"+backend.accelL.toFixed(4).toString()
+                // }
+
+                // Label {
+                //     text: "H:"+backend.accelH.toFixed(4).toString()
+                // }
+
+                // Label {
+                //     text: "C:"+backend.accelC.toFixed(4).toString()
+                // }
+            }
+
+            Column{
+                width:parent.width*2/3
+                height: parent.height
+
+                Label {
+                    text: "Graph Range: "+graphRange.first.value.toFixed(1)+"::"+graphRange.second.value.toFixed(1)
+                }
+                RangeSlider {
+                    id: graphRange
+                    from: -2.0
+                    to:2.0
+                    first.value:-0.2
+                    second.value:0.2
+                    stepSize: 0.1
+                    width: parent.width
+                }
+
+                ChartView {
+                    id:chart
+                    width: parent.width
+                    // anchors.top: graphRange.bottom
+                    // anchors.bottom: mainWindow.bottom
+                    height:parent.height - graphRange.height/2 - graphRange.y
+                    // anchors.fill: parent
+                    // title: "X axis"
+                    // animationOptions: ChartView.SeriesAnimations
+
+                    ValueAxis {
+                        id: myAxisX
+                        min: backend.index-graphSize.value
+                        max: graphSize.value>backend.index? 10:backend.index+1
+                    }
+                    ValueAxis {
+                        id: myAxisY
+                        min: graphRange.first.value
+                        max: graphRange.second.value
+                    }
+
+                    LineSeries {
+                        id: lineDataX
+                        name: "X"
+                        axisX: myAxisX
+                        axisY: myAxisY
+                        width: 3
+                        color:"red"
+                        visible: checkX.checked
+                    }
+                    LineSeries {
+                        id: lineDataY
+                        name: "Y"
+                        axisX: myAxisX
+                        axisY: myAxisY
+                        width: 3
+                        color:"blue"
+                        visible: checkY.checked
+                    }
+                    LineSeries {
+                        id: lineDataZ
+                        name: "Z"
+                        axisX: myAxisX
+                        axisY: myAxisY
+                        width: 3
+                        color:"green"
+                        visible: checkZ.checked
+                    }
+                    LineSeries {
+                        id: lineDataM
+                        name: "M"
+                        axisX: myAxisX
+                        axisY: myAxisY
+                        width: 3
+                        color:"cyan"
+                        visible: checkM.checked
+                    }
+                    LineSeries {
+                        id: lineDataL
+                        name: "L"
+                        axisX: myAxisX
+                        axisY: myAxisY
+                        width: 3
+                        color:"yellow"
+                        visible: checkL.checked
+                    }
+                    LineSeries {
+                        id: lineDataH
+                        name: "H"
+                        axisX: myAxisX
+                        axisY: myAxisY
+                        width: 3
+                        color:"lime"
+                        visible: checkH.checked
+                    }
+                    LineSeries {
+                        id: lineDataC
+                        name: "C"
+                        axisX: myAxisX
+                        axisY: myAxisY
+                        width: 3
+                        color:"magenta"
+                        visible: checkC.checked
+                    }
+
+                    Timer {
+                        id: imuTimer
+                        interval: 8
+                        running: true
+                        repeat: true
+                        onTriggered: {
+                            backend.getImuData()
+                            backend.index = backend.index + 1
+                            if(lineDataX.count > graphSize.value){
+                                lineDataX.remove(0)
+                                lineDataY.remove(0)
+                                lineDataZ.remove(0)
+                                lineDataM.remove(0)
+                                lineDataL.remove(0)
+                                lineDataH.remove(0)
+                                lineDataC.remove(0)
+                            }
+                            lineDataX.append(backend.index,backend.accelX)
+                            lineDataY.append(backend.index,backend.accelY)
+                            lineDataZ.append(backend.index,backend.accelZ)
+                            lineDataM.append(backend.index,backend.accelM)
+                            lineDataL.append(backend.index,backend.accelL)
+                            lineDataH.append(backend.index,backend.accelH)
+                            lineDataC.append(backend.index,backend.accelC)
+                        }
+                    }
+                }
             }
         }
     }
-    }
+*/
 }

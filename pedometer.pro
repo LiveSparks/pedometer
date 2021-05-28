@@ -28,10 +28,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # Input
 SOURCES += \
     main.cpp\
-    backend.cpp
+    backend.cpp\
+    MovingAverage.cpp
 
 HEADERS += \
-    backend.h
+    backend.h \
+    DigitalFilters/DigitalFilters.h\
+    DigitalFilters/CircularDelay/CircularDelay.hpp\
+    MovingAverage.h
 
 RESOURCES += \
     qml.qrc
