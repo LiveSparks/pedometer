@@ -57,8 +57,8 @@ Window {
         running: true
         onTriggered:{
             backend.init()
-            // stackView.push("MainScreen.ui.qml")
-            stackView.push("DebugScreen.ui.qml")
+            stackView.push("MainScreen.ui.qml")
+            // stackView.push("DebugScreen.ui.qml")
         }
     }
 }
