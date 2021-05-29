@@ -12,6 +12,7 @@
 
 class Backend : public QObject {
     Q_OBJECT
+    //Properties registered with our custom QML Type
     Q_PROPERTY(float accelX READ accelX NOTIFY accelXChanged)
     Q_PROPERTY(float accelY READ accelY NOTIFY accelYChanged)
     Q_PROPERTY(float accelZ READ accelZ NOTIFY accelZChanged)
@@ -27,6 +28,7 @@ class Backend : public QObject {
 public:
     explicit Backend(QObject *parent = nullptr);
 
+    //Functions to get Property values
     float accelX();
     float accelY();
     float accelZ();
@@ -35,17 +37,21 @@ public:
     float accelH();
     float accelC();
 
-    int sampleRate();
-    float stepSensitivity();
+    int     sampleRate();
+    float   stepSensitivity();
+    int     stepCount();
+
+    //Function to set Step Detection Secsitivity
     void setStepSensitivity(float stepSensitivity);
-    int stepCount();
 
 public slots:
+    //Custom Functions Registered with our QML Type
     void getImuData();
     void init();
     void shutdown();
 
 signals:
+    //Signals (Callbacks) emitted by our QML Properties
     void accelXChanged();
     void accelYChanged();
     void accelZChanged();
@@ -59,6 +65,7 @@ signals:
     void stepCountChanged();
 
 private:
+    //Variables used by the custom properties
     float m_accelX = 0;
     float m_accelY = 0;
     float m_accelZ = 0;
@@ -69,17 +76,19 @@ private:
     float m_accelC = 0;
 
     int m_sampleRate = 0;
+    int m_stepCount = -1;
+    float m_stepSensitivity = 0.16;
 
+    //IMU Library variables
     RTIMUSettings *m_settings;
     RTIMU *m_imu;
+
+    //Variables used in step calculation
     uint64_t last_time=0;
     uint64_t now = 0;
     int samples = 0;
     MovingAverage mavg = MovingAverage(125);
-
-    float m_stepSensitivity = 0.16;
     bool in_step = false;
-    int m_stepCount = -1;
 };
 
 #endif  // BACKEND_H

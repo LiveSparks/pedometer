@@ -8,10 +8,12 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
+    //Register our custom QML Type
     qmlRegisterType<Backend>("plugin.backend", 1, 0, "Backend");
 
     QQmlApplicationEngine engine;
 
+    //Launch the GUI
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

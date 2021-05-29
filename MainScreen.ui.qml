@@ -23,16 +23,10 @@ Page {
         }
     }
 
-    // onStepCountChanged:{
-    //     stepsRun = stepsRun + backend.stepCount - lastSteps
-    //     lastSteps = backend.stepCount
-    // }
     Rectangle {
         id: rectangle4
         color: globalSettings.blue
         anchors.fill: parent
-        // border.color: "red"
-        // border.width: 5
     }
 
     RowLayout {
@@ -317,6 +311,8 @@ Page {
         }
     }
 
+    // Timer periodically calls the getImuData() function.
+    // Also used to keep track of the Run Time
     Timer {
         id: imuTimer
         interval: 20
