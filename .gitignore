@@ -3,3 +3,4 @@
 build
 RTIMULib.ini
 .vscode
+*.pro.user
