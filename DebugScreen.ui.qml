@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.0
 import QtCharts 2.0
 
 Page {
-    width: 800
-    height: 480
+    width: 320
+    height: 240
 
     title: qsTr("Home")
 
@@ -122,26 +122,6 @@ Page {
             Label {
                 text: "Steps: " + backend.stepCount.toString()
             }
-
-            // Label {
-            //     text: "Z:"+backend.accelZ.toFixed(4).toString()
-            // }
-            
-            // Label {
-            //     text: "M:"+backend.accelM.toFixed(4).toString()
-            // }
-
-            // Label {
-            //     text: "L:"+backend.accelL.toFixed(4).toString()
-            // }
-
-            // Label {
-            //     text: "H:"+backend.accelH.toFixed(4).toString()
-            // }
-
-            // Label {
-            //     text: "C:"+backend.accelC.toFixed(4).toString()
-            // }
         }
 
         Column{
@@ -164,12 +144,7 @@ Page {
             ChartView {
                 id:chart
                 width: parent.width
-                // anchors.top: graphRange.bottom
-                // anchors.bottom: mainWindow.bottom
                 height:parent.height - graphRange.height/2 - graphRange.y
-                // anchors.fill: parent
-                // title: "X axis"
-                // animationOptions: ChartView.SeriesAnimations
 
                 ValueAxis {
                     id: myAxisX

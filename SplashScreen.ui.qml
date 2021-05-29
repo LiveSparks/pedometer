@@ -26,10 +26,10 @@ Page {
 
         AnimatedImage {
             id: animatedImage
-            x: 266
-            y: 173
-            width: 800
-            height: 480
+            x: 0
+            y: 0
+            width: 320
+            height: 240
             anchors.verticalCenter: parent.verticalCenter
             source: "run.gif"
             fillMode: Image.PreserveAspectFit
