@@ -2,8 +2,7 @@ import QtQuick 2.4
 import QtQuick.Controls 2.2
 
 Page {
-    width: 800
-    height: 480
+    // anchors.fill: parent
 
     title: qsTr("Page 2")
 
@@ -26,14 +25,15 @@ Page {
 
         AnimatedImage {
             id: animatedImage
-            x: 0
-            y: 0
-            width: 320
-            height: 240
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.fill: parent
             source: "run.gif"
             fillMode: Image.PreserveAspectFit
-            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

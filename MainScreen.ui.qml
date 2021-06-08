@@ -4,8 +4,7 @@ import QtQuick.Layouts 1.0
 
 Page {
     id: page
-    width: 320
-    height: 240
+    // anchors.fill: parent
     Item {
         id: localSettings
         property bool timerRunning: false
@@ -34,16 +33,16 @@ Page {
         x: 0
         y: 0
         width: parent.width
-        height: 61
+        height: parent.height * 0.25
 
         RoundButton {
             id: playButton
             width: 60
             height: 60
             text: "+"
+            Layout.preferredHeight: parent.height * 0.4
+            Layout.preferredWidth: height
             Layout.leftMargin: 20
-            Layout.preferredHeight: 24
-            Layout.preferredWidth: 24
             display: AbstractButton.IconOnly
             radius: 30
 
@@ -51,7 +50,7 @@ Page {
             icon.color: "white"
             background: Rectangle {
                 color: playButton.down ? "#ffff59" : "#f4cc59"
-                radius: 30
+                radius: width / 2
             }
             // @disable-check M223
             onClicked: {
@@ -67,7 +66,7 @@ Page {
             Layout.preferredWidth: 163
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillHeight: true
-            Layout.fillWidth: false
+            Layout.fillWidth: true
             fillMode: Image.PreserveAspectFit
         }
 
@@ -77,14 +76,14 @@ Page {
             height: 60
             radius: 30
             text: "+"
+            Layout.preferredHeight: parent.height * 0.4
+            Layout.preferredWidth: height
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.rightMargin: 20
-            Layout.preferredHeight: 24
-            Layout.preferredWidth: 24
             icon.color: "#ffffff"
             background: Rectangle {
                 color: settingsButton.down ? "#ffff59" : "#f4cc59"
-                radius: 30
+                radius: height / 2
             }
             icon.source: "gear.png"
             display: AbstractButton.IconOnly
@@ -99,8 +98,8 @@ Page {
     RowLayout {
         id: rowLayout1
         x: 0
-        width: 320
-        height: 108
+        width: parent.width
+        height: parent.height * 0.5
         anchors.top: rowLayout.bottom
         spacing: 0
         anchors.topMargin: 0
@@ -111,25 +110,27 @@ Page {
             width: 72
             height: 72
             color: "#00ffffff"
-            radius: 90
+            radius: width/2
             border.color: globalSettings.gray
-            border.width: 5
-            Layout.preferredHeight: 72
-            Layout.preferredWidth: 72
+            border.width: width * 0.07
+            Layout.preferredWidth: (parent.width - 25) / 4
+            Layout.preferredHeight: width
             Layout.leftMargin: 5
             Layout.margins: 0
 
             Text {
                 id: text1
-                width: 70
-                height: 25
+                width: parent.width * 0.8
+                height: parent.height * 0.35
                 color: globalSettings.purple
                 text: localSettings.cal.toString()
                 //                text: "9999"
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 20
+                font.pixelSize: 200
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                minimumPixelSize: 10
+                fontSizeMode: Text.Fit
                 font.bold: true
                 font.family: "Lato"
                 anchors.verticalCenterOffset: -5
@@ -138,10 +139,14 @@ Page {
 
             Text {
                 id: text2
+                width: parent.width * 0.3
+                height: width / 2
                 color: globalSettings.purple
                 text: qsTr("kcal")
                 anchors.top: text1.bottom
-                font.pixelSize: 15
+                font.pixelSize: 1500
+                horizontalAlignment: Text.AlignHCenter
+                fontSizeMode: Text.Fit
                 font.family: "Lato"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.topMargin: 0
@@ -150,25 +155,24 @@ Page {
 
         Rectangle {
             id: rectangle1
-            width: 72
-            height: 72
             color: "#00ffffff"
-            radius: 90
+            radius: width/2
             border.color: globalSettings.gray
-            border.width: 5
-            Layout.preferredHeight: 72
-            Layout.preferredWidth: 72
+            border.width: width * 0.07
+            Layout.preferredHeight: width
+            Layout.preferredWidth: (parent.width - 25) / 4
             Layout.margins: 0
             Text {
                 id: text3
-                width: 70
-                height: 25
+                width: parent.width * 0.8
+                height: parent.height * 0.35
                 color: globalSettings.purple
                 text: Math.floor(localSettings.runTime / 60).toString()
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 20
+                font.pixelSize: 200
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                fontSizeMode: Text.Fit
                 anchors.verticalCenterOffset: -5
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.bold: true
@@ -177,10 +181,14 @@ Page {
 
             Text {
                 id: text4
+                width: parent.width * 0.3
+                height: width / 2
                 color: globalSettings.purple
                 text: qsTr("min")
                 anchors.top: text3.bottom
-                font.pixelSize: 15
+                font.pixelSize: 150
+                horizontalAlignment: Text.AlignHCenter
+                fontSizeMode: Text.Fit
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.family: "Lato"
                 anchors.topMargin: 0
@@ -192,22 +200,24 @@ Page {
             width: 180
             height: 180
             color: "#00ffffff"
-            radius: 90
+            radius: width/2
             border.color: globalSettings.gray
-            border.width: 5
-            Layout.preferredHeight: 72
-            Layout.preferredWidth: 72
+            border.width: width * 0.07
+            Layout.preferredHeight: width
+            Layout.preferredWidth: (parent.width - 25) / 4
             Layout.margins: 0
             Text {
                 id: text5
-                width: 70
-                height: 25
+                width: parent.width * 0.8
+                height: parent.height * 0.35
                 color: globalSettings.purple
                 text: localSettings.distance.toFixed(2).toString()
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 20
+                font.pixelSize: 200
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                minimumPixelSize: 10
+                fontSizeMode: Text.Fit
                 anchors.verticalCenterOffset: -5
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.bold: true
@@ -216,10 +226,14 @@ Page {
 
             Text {
                 id: text6
+                width: parent.width * 0.3
+                height: width / 2
                 color: globalSettings.purple
                 text: qsTr("km")
                 anchors.top: text5.bottom
-                font.pixelSize: 15
+                font.pixelSize: 200
+                horizontalAlignment: Text.AlignHCenter
+                fontSizeMode: Text.Fit
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.family: "Lato"
                 anchors.topMargin: 0
@@ -231,23 +245,25 @@ Page {
             width: 180
             height: 180
             color: "#00ffffff"
-            radius: 90
+            radius: width/2
             border.color: globalSettings.gray
-            border.width: 5
-            Layout.preferredHeight: 72
-            Layout.preferredWidth: 72
+            border.width: width * 0.07
+            Layout.preferredHeight: width
+            Layout.preferredWidth: (parent.width - 25) / 4
             Layout.rightMargin: 0
             Layout.margins: 0
             Text {
                 id: stepsText
-                width: 70
-                height: 25
+                width: parent.width * 0.8
+                height: parent.height * 0.35
                 color: globalSettings.purple
                 text: localSettings.stepsRun.toString()
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: 20
+                font.pixelSize: 200
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                minimumPixelSize: 10
+                fontSizeMode: Text.Fit
                 anchors.verticalCenterOffset: -5
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.bold: true
@@ -256,10 +272,14 @@ Page {
 
             Text {
                 id: text8
+                width: parent.width * 0.3
+                height: width / 2
                 color: globalSettings.purple
                 text: qsTr("steps")
                 anchors.top: stepsText.bottom
-                font.pixelSize: 15
+                font.pixelSize: 1500
+                horizontalAlignment: Text.AlignHCenter
+                fontSizeMode: Text.Fit
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.family: "Lato"
                 anchors.topMargin: 0
@@ -269,30 +289,42 @@ Page {
 
     RowLayout {
         id: rowLayout2
-        x: 0
-        width: 320
+        width: parent.width
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.top: rowLayout1.bottom
         anchors.bottom: parent.bottom
+        anchors.rightMargin: 0
+        anchors.leftMargin: 0
         anchors.bottomMargin: 0
         anchors.topMargin: 0
 
         Button {
             id: exitButton
             text: qsTr("See you next time!")
+            Layout.preferredWidth: parent.width / 2
+            Layout.preferredHeight: parent.height / 2
+            Layout.maximumWidth: parent.width / 2
+            Layout.maximumHeight: parent.height / 2
             font.bold: true
-            font.pointSize: 19
+            font.pointSize: 200
             font.family: "Lato Hairline"
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            Layout.minimumWidth: 120
-            Layout.minimumHeight: 30
 
             contentItem: Text {
                 text: exitButton.text
+                anchors.fill: parent
                 font: exitButton.font
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                anchors.rightMargin: 5
+                anchors.leftMargin: 5
+                anchors.bottomMargin: 5
+                anchors.topMargin: 5
+                // font.pointSize: 200
+                minimumPixelSize: 10
+                fontSizeMode: Text.Fit
                 // font.pointSize: 14
-                minimumPixelSize: 12
                 color: globalSettings.gray
             }
 
@@ -313,13 +345,16 @@ Page {
 
     // Timer periodically calls the getImuData() function.
     // Also used to keep track of the Run Time
+    // @disable-check M221
     Timer {
         id: imuTimer
         interval: 20
         running: localSettings.timerRunning
         repeat: true
         property int ticks: 0
+        // @disable-check M223
         onTriggered: {
+            // @disable-check M222
             backend.getImuData()
             ticks = ticks + 1
         }
